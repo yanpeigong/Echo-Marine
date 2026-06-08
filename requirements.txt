@@ -1,0 +1,10 @@
+numpy>=1.24
+pandas>=2.0
+Pillow>=10.0
+pyyaml>=6.0
+matplotlib>=3.7
+opencv-python>=4.8
+tqdm>=4.66
+torch>=2.2
+torchvision>=0.17
+tensorboard>=2.15
