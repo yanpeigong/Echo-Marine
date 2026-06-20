@@ -1,9 +1,14 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-<img src="https://img.shields.io/badge/PyTorch-2.2+-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch">
-<img src="https://img.shields.io/badge/CUDA-12.1-76B900?style=for-the-badge&logo=nvidia&logoColor=white" alt="CUDA">
-<img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
+<img src="assets/logo.png" width="100%" alt="Echo-Marine Logo">
+
+<br>
+<br>
+
+<img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/PyTorch-2.2+-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch">
+<img src="https://img.shields.io/badge/CUDA-12.1-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="CUDA">
+<img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License">
 <br>
 <img src="https://img.shields.io/github/stars/yanpeigong/Echo-Marine?style=social" alt="Stars">
 <img src="https://img.shields.io/github/forks/yanpeigong/Echo-Marine?style=social" alt="Forks">
@@ -14,7 +19,6 @@
 
 <br>
 
-<h1 align="center">🌊 Echo-Marine</h1>
 <h3 align="center"><em>C3 智能感知 · 三模态融合目标检测</em></h3>
 
 <p align="center">
@@ -26,70 +30,83 @@
 
 ---
 
-## 📖 目录
+## 目录
 
-- [🔬 方案亮点](#-方案亮点)
-- [🏗️ 架构总览](#️-架构总览)
-- [📁 项目结构](#-项目结构)
-- [🚀 快速开始](#-快速开始)
-- [📊 数据集](#-数据集)
-- [🛠️ 运行流程](#️-运行流程)
-- [⚙️ 配置说明](#️-配置说明)
-- [👥 开发团队](#-开发团队)
-- [📄 文档](#-文档)
+- [方案亮点](#-方案亮点)
+- [架构总览](#-架构总览)
+- [项目结构](#-项目结构)
+- [快速开始](#-快速开始)
+- [数据集](#-数据集)
+- [运行流程](#-运行流程)
+- [配置说明](#-配置说明)
+- [开发团队](#-开发团队)
+- [文档](#-文档)
 
 ---
 
-## 🔬 方案亮点
+## 方案亮点
+
+<div align="center">
 
 <table>
 <tr>
-<td width="50%">
+<td width="33%" align="center" valign="top">
 
-### 🎯 三模态融合
-- **RGB** 可见光 — 轻量去雾增强模块
-- **IR** 红外 — 弱光与夜间轮廓补充
-- **Radar** 雷达 — 点迹 CSV 投影为多通道特征图
+### 三模态融合
 
-</td>
-<td width="50%">
-
-### 🧠 智能融合
-- **QG-CMF** — 质量感知门控融合
-- 自适应抑制失效模态
-- 动态加权多源特征
+RGB 可见光 — 轻量去雾增强<br>
+IR 红外 — 弱光与夜间轮廓补充<br>
+Radar 雷达 — 点迹投影为多通道特征图
 
 </td>
-</tr>
-<tr>
-<td>
+<td width="33%" align="center" valign="top">
 
-### ⚡ 实时推理
-- YOLO 风格 FPN/PAN 多尺度检测头
-- 混合精度训练 (AMP)
-- EMA 平滑 + Cosine 退火
+### QG-CMF 融合
+
+质量感知门控交叉模态融合<br>
+自适应抑制失效模态<br>
+动态加权多源特征
 
 </td>
-<td>
+<td width="34%" align="center" valign="top">
 
-### 🔧 工程完备
-- 训练 / 验证 / 推理 一体化
-- TensorBoard 可视化
-- 完整比赛报告模板
+### 实时推理
+
+YOLO 风格 FPN/PAN 多尺度检测头<br>
+混合精度训练 + EMA + Cosine 退火<br>
+训练 / 验证 / 推理一体化流水线
 
 </td>
 </tr>
 </table>
 
+</div>
+
+<br>
+
+<div align="center">
+
+**Visible &nbsp;·&nbsp; Infrared** — *同一场景，多光谱互补*
+
+<br>
+
+<img src="assets/before.jpg" width="46%" alt="RGB Visible Light" style="border-radius: 6px;">
+&nbsp;
+<img src="assets/after.png" width="46%" alt="Infrared Thermal" style="border-radius: 6px;">
+
+<sub>左：可见光（纹理色彩丰富）&nbsp;&nbsp;|&nbsp;&nbsp;右：红外热成像（目标热辐射突出）</sub>
+
+</div>
+
 ---
 
-## 🏗️ 架构总览
+## 架构总览
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                      Input Streams                       │
 ├──────────────┬──────────────────┬───────────────────────┤
-│   🌈 RGB     │      🔥 IR       │       📡 Radar        │
+│     RGB      │       IR         │        Radar          │
 │ 可见光图像   │   红外热成像     │   点迹投影图 (4ch)     │
 ├──────────────┴──────────────────┴───────────────────────┤
 │               Multi-Branch Backbone                      │
@@ -98,28 +115,32 @@
 │        │ Module  │  │ Stem     │  │ Encoder  │         │
 │        └────┬────┘  └────┬─────┘  └────┬─────┘         │
 ├─────────────┴────────────┴─────────────┴───────────────┤
-│               🧠 QG-CMF Fusion Module                   │
+│                 QG-CMF Fusion Module                     │
 │          Quality-Gated Cross-Modal Fusion               │
 │        ┌──────────────────────────────────┐            │
 │        │  Attention Pooling → Gate → Fuse │            │
 │        └──────────────────────────────────┘            │
 ├─────────────────────────────────────────────────────────┤
-│               🎯 FPN/PAN Detection Neck                  │
+│                 FPN/PAN Detection Neck                   │
 │              Multi-scale Feature Pyramid                 │
 ├─────────────────────────────────────────────────────────┤
-│               📦 YOLO Detection Head                     │
+│                  YOLO Detection Head                     │
 │         cls / obj / bbox → NMS → Detections             │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📁 项目结构
+## 项目结构
 
 ```
 Echo-Marine/
+├── assets/
+│   ├── logo.png                    # 项目 Logo 横幅
+│   ├── before.jpg                  # RGB 可见光示例
+│   └── after.png                   # 红外热成像示例
 ├── configs/
-│   └── c3_multimodal_yolo.yaml    # 训练/模型/数据 统一配置
+│   └── c3_multimodal_yolo.yaml    # 训练 / 模型 / 数据 统一配置
 ├── src/
 │   ├── data/                       # 数据流水线
 │   │   ├── dataset.py              # 多模态 Dataset
@@ -156,7 +177,7 @@ Echo-Marine/
 
 ---
 
-## 🚀 快速开始
+## 快速开始
 
 ### 环境要求
 
@@ -177,7 +198,7 @@ pip install -r requirements.txt
 
 ---
 
-## 📊 数据集
+## 数据集
 
 ### 数据结构
 
@@ -204,11 +225,11 @@ processed/c3_bbox_dataset/
 | 3 | 货轮 | vessel |
 | 4 | 皮划艇 | kayak |
 
-> 💡 每个样本由 `rgb / ir / radar / labels` 四部分组成，文件名一一对应，标签格式为 **YOLO txt**。
+> 每个样本由 `rgb / ir / radar / labels` 四部分组成，文件名一一对应，标签格式为 **YOLO txt**。
 
 ---
 
-## 🛠️ 运行流程
+## 运行流程
 
 ### 训练
 
@@ -237,10 +258,10 @@ python infer.py \
 
 ---
 
-## ⚙️ 配置说明
+## 配置说明
 
 <details>
-<summary>📝 点击展开关键配置项</summary>
+<summary>点击展开关键配置项</summary>
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
@@ -260,7 +281,7 @@ python infer.py \
 
 ---
 
-## 👥 开发团队
+## 开发团队
 
 <table>
 <tr align="center">
@@ -270,10 +291,10 @@ python infer.py \
   <td><strong>POTATOKINGVVV</strong></td>
 </tr>
 <tr align="center">
-  <td>🏗️ 项目架构</td>
-  <td>📊 数据流水线</td>
-  <td>🧠 模型架构</td>
-  <td>⚙️ 训练引擎</td>
+  <td>项目架构</td>
+  <td>数据流水线</td>
+  <td>模型架构</td>
+  <td>训练引擎</td>
 </tr>
 <tr align="center">
   <td><sub>配置 · 文档 · 规范</sub></td>
@@ -283,7 +304,7 @@ python infer.py \
 </tr>
 </table>
 
-### 📅 开发时间线
+### 开发时间线
 
 ```mermaid
 gantt
@@ -306,13 +327,13 @@ gantt
 
 ---
 
-## 📄 文档
+## 文档
 
-- 📘 完整比赛报告 → [`docs/C3_智能感知_算法方案报告.md`](docs/C3_智能感知_算法方案报告.md)
-- ⚙️ 超参配置模板 → [`configs/c3_multimodal_yolo.yaml`](configs/c3_multimodal_yolo.yaml)
+- 完整比赛报告 → [`docs/C3_智能感知_算法方案报告.md`](docs/C3_智能感知_算法方案报告.md)
+- 超参配置模板 → [`configs/c3_multimodal_yolo.yaml`](configs/c3_multimodal_yolo.yaml)
 
 ---
 
 <p align="center">
-  <sub>Built with ❤️ for 全国海洋航行器设计与制作大赛 · C3 智能感知赛题</sub>
+  <sub>Built for 全国海洋航行器设计与制作大赛 · C3 智能感知赛题</sub>
 </p>
