@@ -130,32 +130,11 @@ YOLO 风格 FPN/PAN 多尺度检测头<br>
 
 <br>
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Input Streams                       │
-├──────────────┬──────────────────┬───────────────────────┤
-│     RGB      │       IR         │        Radar          │
-│ 可见光图像   │   红外热成像     │   点迹投影图 (4ch)     │
-├──────────────┴──────────────────┴───────────────────────┤
-│               Multi-Branch Backbone                      │
-│        ┌─────────┐  ┌──────────┐  ┌──────────┐         │
-│        │ Dehaze  │  │ IR Conv  │  │ Radar    │         │
-│        │ Module  │  │ Stem     │  │ Encoder  │         │
-│        └────┬────┘  └────┬─────┘  └────┬─────┘         │
-├─────────────┴────────────┴─────────────┴───────────────┤
-│                 QG-CMF Fusion Module                     │
-│          Quality-Gated Cross-Modal Fusion               │
-│        ┌──────────────────────────────────┐            │
-│        │  Attention Pooling → Gate → Fuse │            │
-│        └──────────────────────────────────┘            │
-├─────────────────────────────────────────────────────────┤
-│                 FPN/PAN Detection Neck                   │
-│              Multi-scale Feature Pyramid                 │
-├─────────────────────────────────────────────────────────┤
-│                  YOLO Detection Head                     │
-│         cls / obj / bbox → NMS → Detections             │
-└─────────────────────────────────────────────────────────┘
-```
+<div align="center">
+
+<img src="assets/architecture.png" width="100%" alt="Echo-Marine Architecture">
+
+</div>
 
 <br>
 
@@ -171,6 +150,7 @@ YOLO 风格 FPN/PAN 多尺度检测头<br>
 Echo-Marine/
 ├── assets/
 │   ├── logo.png                    # 项目 Logo 横幅
+│   ├── architecture.png            # 模型架构图
 │   ├── before.jpg                  # RGB 可见光示例
 │   └── after.png                   # 红外热成像示例
 ├── configs/
@@ -219,28 +199,28 @@ Echo-Marine/
 
 <br>
 
-### 环境要求
-
-<br>
-
-| 依赖 | 版本 |
-|------|------|
-| Python | ≥ 3.10 |
-| PyTorch | ≥ 2.2 |
-| CUDA | ≥ 11.8 (推荐 12.1) |
-| OpenCV | ≥ 4.8 |
-
-<br>
-
-### 安装
+### 环境搭建
 
 <br>
 
 ```bash
+# 1. 克隆仓库
 git clone https://github.com/yanpeigong/Echo-Marine.git
 cd Echo-Marine
+```
+
+```bash
+# 2. 创建并激活 conda 环境 (Python ≥ 3.10)
+conda create -n echo-marine python=3.10 -y
+conda activate echo-marine
+```
+
+```bash
+# 3. 安装依赖
 pip install -r requirements.txt
 ```
+
+> 依赖清单：**Python ≥ 3.10** · **PyTorch ≥ 2.2** · **CUDA ≥ 11.8 (推荐 12.1)** · **OpenCV ≥ 4.8**
 
 <br>
 
