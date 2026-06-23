@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" width="100%" alt="Echo-Marine Logo">
+<img src="assets/logo3.png" width="100%" alt="Echo-Marine Logo">
 
 <br>
 <br>
@@ -28,16 +28,9 @@
 基于 YOLO 架构的 <strong>RGB + 红外 + 雷达</strong> 多模态融合检测方案
 </p>
 
-<br>
-<br>
-
 ---
 
-<br>
-
 ## 目录
-
-<br>
 
 - [方案亮点](#-方案亮点)
 - [架构总览](#-架构总览)
@@ -49,15 +42,9 @@
 - [开发团队](#-开发团队)
 - [文档](#-文档)
 
-<br>
-
 ---
 
-<br>
-
 ## 方案亮点
-
-<br>
 
 <div align="center">
 
@@ -66,8 +53,6 @@
 <td width="33%" align="center" valign="top">
 
 ### 三模态融合
-
-<br>
 
 RGB 可见光 — 轻量去雾增强<br>
 IR 红外 — 弱光与夜间轮廓补充<br>
@@ -78,8 +63,6 @@ Radar 雷达 — 点迹投影为多通道特征图
 
 ### QG-CMF 融合
 
-<br>
-
 质量感知门控交叉模态融合<br>
 自适应抑制失效模态<br>
 动态加权多源特征
@@ -88,8 +71,6 @@ Radar 雷达 — 点迹投影为多通道特征图
 <td width="34%" align="center" valign="top">
 
 ### 实时推理
-
-<br>
 
 YOLO 风格 FPN/PAN 多尺度检测头<br>
 混合精度训练 + EMA + Cosine 退火<br>
@@ -101,9 +82,6 @@ YOLO 风格 FPN/PAN 多尺度检测头<br>
 
 </div>
 
-<br>
-<br>
-
 <div align="center">
 
 **Visible &nbsp;·&nbsp; Infrared** &nbsp;—&nbsp; *同一场景，多光谱互补*
@@ -114,21 +92,15 @@ YOLO 风格 FPN/PAN 多尺度检测头<br>
 &nbsp;
 <img src="assets/after.png" width="46%" alt="Infrared Thermal" style="border-radius: 6px;">
 
-<br>
-
 <sub>左：可见光（纹理色彩丰富）&nbsp;&nbsp;|&nbsp;&nbsp;右：红外热成像（目标热辐射突出）</sub>
 
 </div>
 
-<br>
-
 ---
-
-<br>
 
 ## 架构总览
 
-<br>
+三路输入（RGB / IR / Radar）经各自骨干分支提取特征后，由 QG-CMF 质量感知门控融合模块动态整合，再通过 FPN/PAN 多尺度颈部送入 YOLO 检测头输出检测结果。
 
 <div align="center">
 
@@ -136,15 +108,9 @@ YOLO 风格 FPN/PAN 多尺度检测头<br>
 
 </div>
 
-<br>
-
 ---
 
-<br>
-
 ## 项目结构
-
-<br>
 
 ```
 Echo-Marine/
@@ -189,19 +155,11 @@ Echo-Marine/
 └── README.md
 ```
 
-<br>
-
 ---
-
-<br>
 
 ## 快速开始
 
-<br>
-
 ### 环境搭建
-
-<br>
 
 ```bash
 # 1. 克隆仓库
@@ -222,19 +180,11 @@ pip install -r requirements.txt
 
 > 依赖清单：**Python ≥ 3.10** · **PyTorch ≥ 2.2** · **CUDA ≥ 11.8 (推荐 12.1)** · **OpenCV ≥ 4.8**
 
-<br>
-
 ---
-
-<br>
 
 ## 数据集
 
-<br>
-
 ### 数据结构
-
-<br>
 
 ```
 processed/c3_bbox_dataset/
@@ -249,11 +199,7 @@ processed/c3_bbox_dataset/
 └── dataset.yaml
 ```
 
-<br>
-
 ### 检测类别
-
-<br>
 
 | ID | 类别 | 英文 |
 |----|------|------|
@@ -263,33 +209,19 @@ processed/c3_bbox_dataset/
 | 3 | 货轮 | vessel |
 | 4 | 皮划艇 | kayak |
 
-<br>
-
 > 每个样本由 `rgb / ir / radar / labels` 四部分组成，文件名一一对应，标签格式为 **YOLO txt**。
-
-<br>
 
 ---
 
-<br>
-
 ## 运行流程
 
-<br>
-
 ### 训练
-
-<br>
 
 ```bash
 python train.py --config configs/c3_multimodal_yolo.yaml
 ```
 
-<br>
-
 ### 验证
-
-<br>
 
 ```bash
 python train.py \
@@ -298,11 +230,7 @@ python train.py \
   --checkpoint runs/c3_multimodal_yolo/best.pt
 ```
 
-<br>
-
 ### 推理
-
-<br>
 
 ```bash
 python infer.py \
@@ -312,20 +240,12 @@ python infer.py \
   --save-dir runs/c3_multimodal_yolo/infer_test
 ```
 
-<br>
-
 ---
-
-<br>
 
 ## 配置说明
 
-<br>
-
 <details>
 <summary>点击展开关键配置项</summary>
-
-<br>
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
@@ -341,19 +261,11 @@ python infer.py \
 | `loss.box_weight` | 5.0 | 边界框损失权重 |
 | `inference.conf_threshold` | 0.25 | 置信度阈值 |
 
-<br>
-
 </details>
-
-<br>
 
 ---
 
-<br>
-
 ## 开发团队
-
-<br>
 
 <table>
 <tr align="center">
@@ -376,11 +288,7 @@ python infer.py \
 </tr>
 </table>
 
-<br>
-
 ### 开发时间线
-
-<br>
 
 ```mermaid
 gantt
@@ -403,24 +311,14 @@ gantt
     训练引擎 · 推理流程        :done, a4, 2026-06-17, 3d
 ```
 
-<br>
-
 ---
 
-<br>
-
 ## 文档
-
-<br>
 
 - 完整比赛报告 → [`docs/C3_智能感知_算法方案报告.md`](docs/C3_智能感知_算法方案报告.md)
 - 超参配置模板 → [`configs/c3_multimodal_yolo.yaml`](configs/c3_multimodal_yolo.yaml)
 
-<br>
-
 ---
-
-<br>
 
 <p align="center">
   <sub>Built for 全国海洋航行器设计与制作大赛 · C3 智能感知赛题</sub>
