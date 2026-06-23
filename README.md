@@ -24,8 +24,8 @@
 <h3 align="center"><em>C3 智能感知 · 三模态融合目标检测</em></h3>
 
 <p align="center">
-面向 <strong>全国海洋航行器设计与制作大赛</strong> C3 智能感知赛题<br>
-基于 YOLO 架构的 <strong>RGB + 红外 + 雷达</strong> 多模态融合检测方案
+面向 <strong>全国海洋航行器设计与制作大赛</strong> C3 智能感知赛题 — 复杂海况下浮标等多类目标的鲁棒实时检测<br>
+基于 YOLO 架构融合 <strong>RGB 可见光 · 红外热成像 · 雷达点迹</strong>，通过 <strong>QG-CMF</strong> 感知门控模块自适应整合多源异构特征
 </p>
 
 ---
